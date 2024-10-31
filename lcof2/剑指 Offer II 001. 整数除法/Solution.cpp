@@ -24,3 +24,65 @@ public:
         return sign ? ans : -ans;
     }
 };
+
+#include <iostream>
+#include <climits>
+
+using namespace std;
+
+class Solution
+{
+public:
+    int divide(int a, int b)
+    {
+        if (a == INT_MIN && b == -1)
+            return INT_MAX;
+        int negative = 0, ans = 0, flag = 0;
+        if (a < 0)
+        {
+            negative++;
+            if (a == INT_MIN)
+            {
+                a = INT_MAX;
+                flag = 1;
+            }
+            else
+            {
+                a = -a;
+            }
+        }
+        if (b < 0)
+        {
+            negative++;
+            b = -b;
+        }
+        while (a >= b)
+        {
+            int d = b, c = 1;
+            while (d < INT_MAX >> 1 && (d + d <= a))
+            {
+                d += d;
+                c += c;
+            }
+            a -= d;
+            ans += c;
+            if (flag)
+            {
+                a += 1;
+                flag = 0;
+            }
+        }
+        return negative == 1 ? -ans : ans;
+    }
+};
+
+int main()
+{
+    Solution solution;
+    int a = INT_MIN;
+    int b = 1;
+    int result = solution.divide(a, b);
+    cout << "Result of " << a << " divided by " << b << " is: " << result << endl;
+
+    return 0;
+}
