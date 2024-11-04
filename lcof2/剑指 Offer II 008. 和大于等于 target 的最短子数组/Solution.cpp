@@ -15,3 +15,20 @@ public:
         return ans == inf ? 0 : ans;
     }
 };
+
+class Solution {
+public:
+    int minSubArrayLen(int target, vector<int>& nums) {
+        int length = INT_MAX, sum = 0;
+        for(int fast = 0, slow = 0; fast < nums.size(); fast++)
+        {
+            sum += nums[fast];
+            while(sum >= target)
+            {
+                length = min(length, fast - slow + 1);
+                sum -= nums[slow++];
+            }
+        }
+        return length == INT_MAX ? 0 : length;
+    }
+};

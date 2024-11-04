@@ -13,3 +13,23 @@ public:
         return ans;
     }
 };
+
+class Solution {
+public:
+    int numSubarrayProductLessThanK(vector<int>& nums, int k) {
+        int ans = 0, product = 1;
+        for(int left = 0, right = 0; right < nums.size(); right++)
+        {
+            product *= nums[right];
+            while(left <= right && product >= k)
+            {
+                product /= nums[left++];
+            }
+            if(left <= right)
+            {
+                ans += (right - left + 1);
+            }
+        }
+        return ans;
+    }
+};
